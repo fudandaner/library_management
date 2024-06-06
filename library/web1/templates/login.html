@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1/css/bootstrap.min.css' %}">
+    <style>
+        .brod {
+            box-shadow: 5px 5px 20px #aaa;
+            border: 1px solid #aaa;
+        }
+
+        .frame {
+            background-color: white;
+            width: 500px;
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 200px;
+            padding: 20px 40px;
+
+        }
+
+        .a:hover {
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div class="container frame brod clearfix">
+        <h2 style="text-align: center;font-size: 18px;margin-top: 10px;">用户登录</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>用户ID</label>
+                <input type="text" class="form-control" name="id" placeholder="请输入用户ID">
+            </div>
+            <div class="form-group">
+                <label>密码</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" name="psd" placeholder="密码">
+                <span class="glyphicon glyphicon-eye-open a" aria-hidden="true"
+                      onclick="togglePasswordVisibility()"
+                      style="position: absolute; right: 50px; top: 64%; transform: translateY(-50%);">
+                </span>
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="return validateForm()">登录</button>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="/library/manage_login/">管理员登录</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="/library/register/">注册</a>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+<script>
+    function validateForm() {
+        var id = document.getElementsByName("id")[0].value;
+        var psd = document.getElementsByName("psd")[0].value;
+
+        if (!id || !psd) {
+            alert("请输入完整");
+            return false
+        }
+        var pricePattern = /^\d+?$/;
+        if (!pricePattern.test(id)) {
+            alert('用户ID为整数！');
+            return false;
+        }
+    }
+    {% if student_not_found %}
+        alert("ID或密码错误，请重新输入");
+    {% endif %}
+    function togglePasswordVisibility() {
+        var passwordInput = document.getElementById("exampleInputPassword1");
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+        } else {
+            passwordInput.type = "password";
+        }
+    }
+</script>
+<script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1/js/bootstrap.min.js' %}"></script>
+</body>
+</html>

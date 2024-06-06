@@ -1,0 +1,42 @@
+{% extends 'layout2.html' %}
+{% block content %}
+    <div class="container">
+        <div style="margin-bottom: 10px;font-size: 20px">
+            <span>共</span>
+            <span style="color: red ">{{ queryset_count }}</span>
+            <span>条记录</span>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                学生信息表
+            </div>
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>学生ID</th>
+                    <th>密码</th>
+                    <th>名字</th>
+                    <th>性别</th>
+                    <th>年级</th>
+                    <th>专业</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in queryset %}
+                    <tr>
+                        <th scope="row">{{ obj.StudentID }}</th>
+                        <td>{{ obj.Password }}</td>
+                        <td>{{ obj.Name }}</td>
+                        <td>{{ obj.get_Gender_display }}</td>
+                        <td>{{ obj.Grade }}</td>
+                        <td>{{ obj.Major }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+{% endblock %}

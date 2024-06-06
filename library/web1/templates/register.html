@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1/css/bootstrap.min.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">学生注册</h3>
+            </div>
+            <div class="panel-body">
+                <form method="post">
+                    {% csrf_token %}
+
+
+                    <div class="form-group">
+                        <label>姓名</label>
+                        <input type="text" class="form-control" placeholder="姓名" name="Name"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>密码</label>
+                        <input type="text" class="form-control" placeholder="密码" name="Password"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>性别</label>
+                        <select class="form-control" name="Gender" >
+                            {% for item in gender_choice %}
+                                <option value="{{ item.0 }}" >{{ item.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>年级</label>
+                        <select class="form-control" name="Grade" >
+                                <option value="1" >大一</option>
+                                <option value="2" >大二</option>
+                                <option value="3" >大三</option>
+                                <option value="4" >大四</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>专业</label>
+                        <select class="form-control" name="Major" >
+                                <option value="计算机">计算机</option>
+                                <option value="人工智能" >人工智能</option>
+                                <option value="物理" >物理</option>
+                                <option value="新闻" >新闻</option>
+                                <option value="大数据" >大数据</option>
+                                <option value="航空航天" >航空航天</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" onclick="return validateForm()">提交</button>
+                </form>
+            </div>
+        </div>
+    </div>
+<script>
+    function validateForm() {
+
+        var Name = document.getElementsByName("Name")[0].value;
+        var Password = document.getElementsByName("Password")[0].value;
+        var Gender = document.getElementsByName("Gender")[0].value;
+        var Grade = document.getElementsByName("Grade")[0].value;
+        var Major = document.getElementsByName("Major")[0].value;
+
+        if (!Name ) {
+            alert("请输入完整");
+            return false
+        }
+        if (!Password ) {
+            alert("请输入完整");
+            return false
+        }
+        if (!Gender ) {
+            alert("请输入完整");
+            return false
+        }
+        if (!Grade ) {
+            alert("请输入完整");
+            return false
+        }
+        if (!Major ) {
+            alert("请输入完整");
+            return false
+        }
+    }
+    {% if has_created %}
+        alert("创建成功！记住你的id为:{{ new_id }}");
+        window.location.href = "/library/login/"
+    {% endif %}
+</script>
+<script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1/js/bootstrap.min.js' %}"></script>
+</body>
+</html>

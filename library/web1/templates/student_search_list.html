@@ -1,0 +1,58 @@
+{% extends 'layout1.html' %}
+{% block content %}
+    <div class="container">
+        <div style="margin-bottom: 10px;font-size: 20px">
+            <span>共检索到</span>
+            <span style="color: red ">{{ queryset_count }}</span>
+            <span>条记录</span>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                图书列表
+            </div>
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>图书ID</th>
+                    <th>书名</th>
+                    <th>作者</th>
+                    <th>出版社</th>
+                    <th>出版时间</th>
+                    <th>ISBN</th>
+                    <th>价格</th>
+                    <th>借阅状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in queryset %}
+                    <tr>
+                        <th scope="row">{{ obj.BookID }}</th>
+                        <td>{{ obj.Title }}</td>
+                        <td>{{ obj.Author }}</td>
+                        <td>{{ obj.Publisher }}</td>
+                        <td>{{ obj.PublishDate|date:"Y-m-d" }}</td>
+                        <td>{{ obj.ISBN }}</td>
+                        <td>{{ obj.Price }}</td>
+                        <td>{{ obj.get_LendState_display }}</td>
+                        <td>
+                            {% if obj.LendState == 1 %}
+                                <a class="btn btn-success btn-xs" href="/library/{{ obj.BookID }}/{{ id }}/student_rent/">
+                                    借阅
+                                </a>
+                            {% else %}
+                                <a class="btn btn-danger btn-xs" href="#">
+                                    不可借阅
+                                </a>
+                            {% endif %}
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

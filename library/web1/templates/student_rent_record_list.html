@@ -1,0 +1,51 @@
+{% extends 'layout1.html' %}
+{% block content %}
+    <div class="container">
+        <div style="margin-bottom: 10px;font-size: 20px">
+            <span>共有</span>
+            <span style="color: red ">{{ queryset_count }}</span>
+            <span>条借阅记录</span>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                借阅信息表
+            </div>
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>借阅ID</th>
+                    <th>书籍ID</th>
+                    <th>学生ID</th>
+                    <th>借阅日期</th>
+                    <th>归还日期</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in qst %}
+                    <tr>
+                        <th scope="row">{{ obj.BorrowID }}</th>
+                        <td>{{ obj.BookID_id }}</td>
+                        <td>{{ obj.StudentID_id }}</td>
+                        <td>{{ obj.BorrowDate|date:"Y-m-d" }}</td>
+                        <td>{{ obj.ReturnDate|date:"Y-m-d" }}</td>
+                        <td>
+                            {% if obj.ReturnDate %}
+                                <a class="btn btn-danger btn-xs" href="#">已归还</a>
+                            {% else %}
+                                <a class="btn btn-success btn-xs"
+                                   href="/library/{{ obj.BorrowID }}/{{ id }}/student_return/">归还</a>
+                            {% endif %}
+
+                            {#                            <a class="btn btn-danger btn-xs" href="/library/book_delete/?nid={{ obj.BookID }}">删除</a>#}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+{% endblock %}

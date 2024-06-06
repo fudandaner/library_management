@@ -1,0 +1,56 @@
+{% extends "layout2.html" %}
+{% block content %}
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">借阅记录查询</h3>
+            </div>
+            <div class="panel-body">
+                <form method="post" onsubmit="return validateForm()">
+                    {% csrf_token %}
+
+
+                    <div class="form-group">
+                        <label>书籍ID</label>
+                        <input type="text" class="form-control" placeholder="BookID" name="book_id"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>学生ID</label>
+                        <input type="text" class="form-control" placeholder="学生ID" name="student_id"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>借阅状态</label>
+                        <select class="form-control" name="LendState" >
+                                <option value="1" >未归还</option>
+                                <option value="2" >已归还</option>
+                                <option value="3" >不考虑</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" >提交</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        function validateForm() {
+            var book_id = document.getElementsByName("book_id")[0].value;
+            var student_id = document.getElementsByName("student_id")[0].value;
+            var Pattern = /^\d+?$/;
+            if(book_id) {
+                if (!Pattern.test(book_id)) {
+                    alert('学生id须为整数');
+                    return false;
+                }
+            }
+            if(student_id) {
+                if (!Pattern.test(student_id)) {
+                    alert('书籍id须为整数');
+                    return false;
+                }
+            }
+        }
+    </script>
+{% endblock %}
